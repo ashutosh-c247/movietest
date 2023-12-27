@@ -81,12 +81,9 @@ button:hover {
   font-size: var(--body-regular-font-size);
   font-style: var(--body-regular-font-style);
   font-weight: var(--body-regular-font-weight);
-  left: 59px;
   letter-spacing: var(--body-regular-letter-spacing);
   line-height: var(--body-regular-line-height);
-  position: absolute;
   text-align: center;
-  top: 15px;
   white-space: nowrap;
 }
 
@@ -107,12 +104,9 @@ button:hover {
   font-size: var(--body-regular-font-size);
   font-style: var(--body-regular-font-style);
   font-weight: var(--body-regular-font-weight);
-  left: 55px;
   letter-spacing: var(--body-regular-letter-spacing);
   line-height: var(--body-regular-line-height);
-  position: absolute;
   text-align: center;
-  top: 15px;
   white-space: nowrap;
 }
 
@@ -121,15 +115,13 @@ button:hover {
   background-color: #093545;
   display: flex;
   flex-direction: row;
-  justify-content: center;
   width: 100%;
 }
 
 .edit .div {
   background-color: #093545;
-  height: 900px;
   position: relative;
-  width: 1440px;
+  margin: 0 auto;
 }
 
 .edit .vectors {
@@ -145,65 +137,31 @@ button:hover {
   border: 2px dashed;
   border-color: #ffffff;
   border-radius: 10px;
-  height: 504px;
-  left: 120px;
-  position: absolute;
-  top: 296px;
-  width: 473px;
+  position: relative;
 }
 
 .edit .group-2 {
-  height: 100px;
+  height: 100%;
   position: relative;
-  top: 222px;
-  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .edit .text-wrapper-2 {
   color: #ffffff;
   font-size: 14px;
   font-weight: 400;
-  left: 0;
   letter-spacing: 0;
   line-height: 24px;
-  position: absolute;
   text-align: center;
-  top: 32px;
   white-space: nowrap;
 }
 
 .edit .file-download-black {
   height: 24px;
-  left: 69px;
-  position: absolute;
-  top: 0;
   width: 24px;
-}
-
-.edit .button-instance {
-  height: 55px !important;
-  left: 903px !important;
-  position: absolute !important;
-  top: 474px !important;
-}
-
-.edit .design-component-instance-node {
-  left: 58px !important;
-}
-
-.edit .button-2 {
-  height: 55px !important;
-  left: 720px !important;
-  position: absolute !important;
-  top: 474px !important;
-}
-
-.edit .input {
-  height: 45px;
-  left: 720px;
-  position: absolute;
-  top: 365px;
-  width: 243px;
 }
 
 .edit .overlap-group {
@@ -229,14 +187,9 @@ button:hover {
   white-space: nowrap;
 }
 
-.edit .overlap-wrapper {
-  height: 45px;
-  left: 720px;
-  position: absolute;
-  top: 296px;
-  width: 364px;
+.edit .form {
+  max-width: 100%;
 }
-
 .edit .overlap {
   background-color: var(--input-color);
   border-radius: 10px;
@@ -269,8 +222,37 @@ button:hover {
   left: 120px;
   letter-spacing: var(--h2-letter-spacing);
   line-height: var(--h2-line-height);
+}
+
+.movie-box{
+  background-color: #092C39;
+}
+
+.remember-me-check{
+  width: 20px;
+  height: 20px;
   position: absolute;
-  text-align: center;
-  top: 119px;
-  white-space: nowrap;
+  left: 0px;
+  opacity: 0;
+}
+.custom-checkbox{
+  display: flex;
+  width: 18px;
+  height: 18px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0px;
+  position: relative;
+  background: #224957;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+.remember-me-check:checked + .custom-checkbox:after{
+  content: "";
+  display: block;
+  width: 12px;
+  height: 12px;
+  background-image: url("../../public/assets/check-mark.png");
+  background-size: contain;
+  background-repeat: no-repeat;
 }
