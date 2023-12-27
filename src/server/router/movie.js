@@ -3,23 +3,40 @@ import { t } from "./trpc";
 import { z } from "zod";
 
 export const movieRouter = t.router({
-  listMovies: t.procedure.query(async ({ ctx }) => {
-    const movies = await ctx.prisma.movie.findMany();
-    return movies;
-  }),
+  listMovies: t.procedure
+    .input(
+      z.object({
+        userEmail: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const movies = await ctx.prisma.movie.findMany({
+        where: { userEmail: input.userEmail },
+        orderBy: { createdAt: "desc" },
+      });
+      return movies;
+    }),
   createMovie: t.procedure
     .input(
       z.object({
+        userEmail: z.string(),
         title: z.string(),
         poster: z.string(),
         publishingYear: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const { title, poster, publishingYear } = input;
+      const { userEmail, title, poster, publishingYear } = input;
 
       const newMovie = await ctx.prisma.movie.create({
-        data: { title, poster, publishingYear },
+        data: {
+          title,
+          poster,
+          publishingYear,
+          user: {
+            connect: { email: userEmail },
+          },
+        },
       });
 
       return newMovie;

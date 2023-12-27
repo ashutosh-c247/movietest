@@ -36,7 +36,15 @@ const createMovie = () => {
   });
 
   const onSubmit = async (data) => {
-    await createMovie.mutateAsync(data);
+    if (!previewImage) {
+      toast.error("Please upload an image");
+      return;
+    }
+    const mutatedData = {
+      ...data,
+      userEmail: session.user.email,
+    };
+    await createMovie.mutateAsync(mutatedData);
   };
 
   const onFileChange = async (event) => {

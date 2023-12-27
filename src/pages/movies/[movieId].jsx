@@ -59,6 +59,10 @@ const Edit = () => {
   });
 
   const onSubmit = async (data) => {
+    if (!previewImage) {
+      toast.error("Please upload an image");
+      return;
+    }
     await updateMovie.mutateAsync({
       movieId: router.query.movieId,
       poster: previewImage,
@@ -72,7 +76,7 @@ const Edit = () => {
   };
 
   const handleImageDrop = (event) => {
-    fileInputRef.current.click();
+    fileInputRef?.current?.click();
   };
   const onFileChange = async (event) => {
     const file = event?.target?.files?.[0];

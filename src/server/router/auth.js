@@ -39,6 +39,6 @@ export const authRouter = t.router({
         },
       });
 
-      res.status(201).json(newUser);
+      return newUser;
     }),
 });
