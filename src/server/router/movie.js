@@ -12,7 +12,7 @@ export const movieRouter = t.router({
     .query(async ({ ctx, input }) => {
       const movies = await ctx.prisma.movie.findMany({
         where: { userEmail: input.userEmail },
-        orderBy: { createdAt: "desc" },
+        orderBy: { updatedAt: "desc" },
       });
       return movies;
     }),
