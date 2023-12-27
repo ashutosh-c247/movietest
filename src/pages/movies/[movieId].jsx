@@ -5,9 +5,11 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { trpc } from "@/utils/trpc";
+import { useSession } from "next-auth/react";
 
 const Edit = () => {
   const router = useRouter();
+  const { data: session } = useSession();
   const { data } = trpc.movie.getMovieById.useQuery({
     movieId: router.query.movieId,
   });
@@ -33,6 +35,11 @@ const Edit = () => {
       setValue("publishingYear", data.publishingYear);
     }
   }, [data]);
+  useEffect(() => {
+    if (!session) {
+      router.push("/");
+    }
+  }, [session, router]);
 
   const fileInputRef = useRef(null);
 

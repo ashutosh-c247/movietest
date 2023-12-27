@@ -7,7 +7,7 @@ import { signIn, useSession, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 
-const schema = yup.object().shape({
+const loginValidationSchema = yup.object().shape({
   email: yup
     .string()
     .email("Invalid email address")
@@ -30,7 +30,7 @@ const SignIn = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(loginValidationSchema),
   });
 
   const onSubmit = async (data) => {
@@ -107,7 +107,7 @@ const SignIn = () => {
           className="w-[300px] h-[54px] px-[126px] py-[15px] left-0 top-[306px] absolute bg-emerald-400 rounded-[10px] justify-start cursor-pointer items-start gap-[5px] inline-flex text-center text-white text-base font-bold leading-normal hover:bg-emerald-500"
           style={{ hover: "none" }}
         >
-          Login
+          {submitting ? "Loading..." : "Login"}
         </button>
         <p className="left-[37px] top-[250px] absolute text-center text-white text-[12px] font-semibold leading-[80px]">
           Don't have an account? <Link href="auth/signup">Sign Up</Link>{" "}

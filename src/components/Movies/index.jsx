@@ -10,6 +10,7 @@ const MoviePage = ({ movies, router }) => {
   const currentMovies = movies?.slice(indexOfFirstMovie, indexOfLastMovie);
 
   const totalPages = Math.ceil(movies?.length / moviesPerPage);
+
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };

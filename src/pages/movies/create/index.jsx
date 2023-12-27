@@ -1,10 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { uploadImage } from "@/utils/cloudinaryHelper";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { trpc } from "@/utils/trpc";
+import { useSession } from "next-auth/react";
 
 const createMovie = () => {
   const {
@@ -16,6 +17,13 @@ const createMovie = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const fileInputRef = useRef(null);
   const router = useRouter();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (!session) {
+      router.push("/");
+    }
+  }, [session, router]);
 
   const createMovie = trpc.movie.createMovie.useMutation({
     onSuccess: () => {
