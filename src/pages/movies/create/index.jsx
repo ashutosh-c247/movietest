@@ -113,7 +113,7 @@ const createMovie = () => {
           type="submit"
           className={`button button-instance cursor-pointer`}
         >
-          <div className={`submit design-component-instance-node`}>Update</div>
+          <div className={`submit design-component-instance-node`}>Create</div>
         </button>
         <button
           type="button"
