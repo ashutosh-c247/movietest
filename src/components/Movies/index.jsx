@@ -1,9 +1,18 @@
-import { useForm } from "react-hook-form";
-import { uploadImage } from "@/utils/cloudinaryHelper";
+import { useState } from "react";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
 
 const MoviePage = ({ movies, router }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const moviesPerPage = 6;
+  const indexOfLastMovie = currentPage * moviesPerPage;
+  const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
+  const currentMovies = movies?.slice(indexOfFirstMovie, indexOfLastMovie);
+
+  const totalPages = Math.ceil(movies?.length / moviesPerPage);
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
   const handleSignOut = async () => {
     await signOut({ callbackUrl: "/" });
   };
@@ -37,7 +46,7 @@ const MoviePage = ({ movies, router }) => {
         </div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {movies?.map((movie) => (
+        {currentMovies?.map((movie) => (
           <div
             key={movie.id}
             className="w-9/12 cursor-pointer"
@@ -62,6 +71,25 @@ const MoviePage = ({ movies, router }) => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="flex justify-center items-center mt-4">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="mr-2 px-4 py-2 border rounded-md"
+        >
+          Previous
+        </button>
+        <span className="mx-2">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="ml-2 px-4 py-2 border rounded-md"
+        >
+          Next
+        </button>
       </div>
     </div>
   );
