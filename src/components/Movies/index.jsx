@@ -17,7 +17,6 @@ const MoviePage = ({ movies, router }) => {
   const handleSignOut = async () => {
     await signOut({ callbackUrl: "/" });
   };
-  console.log(movies.length);
   return (
     <div className="min-h-screen p-8 flex flex-col space-y-8 lg:py-[80px] xl:py-[120px] md:px-[30px] xl:px-[120px]">
       <div class="w-full">
