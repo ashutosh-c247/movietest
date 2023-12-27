@@ -4,7 +4,7 @@ import { signOut } from "next-auth/react";
 
 const MoviePage = ({ movies, router }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const moviesPerPage = 6;
+  const moviesPerPage = 8;
   const indexOfLastMovie = currentPage * moviesPerPage;
   const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
   const currentMovies = movies?.slice(indexOfFirstMovie, indexOfLastMovie);
@@ -19,7 +19,7 @@ const MoviePage = ({ movies, router }) => {
   };
   return (
     <div className="min-h-screen p-8 flex flex-col space-y-8 lg:py-[80px] xl:py-[120px] md:px-[30px] xl:px-[120px]">
-      <div class="w-full">
+      <div className="w-full">
         <div className="flex justify-between items-start mb-[40px] lg:mb-[80px] xl:mb-[100px]">
           <div className="gap-3 flex items-center space-x-2 text-white text-xl sm:text-4xl md:text-5xl font-semibold font-montserrat leading-10">
             My movies
@@ -47,7 +47,7 @@ const MoviePage = ({ movies, router }) => {
           </div>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {movies?.map((movie) => (
+          {currentMovies?.map((movie) => (
             <div
               key={movie.id}
               className="cursor-pointer"
@@ -72,7 +72,7 @@ const MoviePage = ({ movies, router }) => {
           ))}
         </div>
 
-        {!movies?.length ? (
+        {!currentMovies?.length ? (
           <div className="flex justify-center flex-col items-center pt-10">
             <h2 className="text-white text-xl sm:text-4xl md:text-5xl font-semibold font-montserrat leading-10 pb-5">
               Your movie list is empty
@@ -89,7 +89,7 @@ const MoviePage = ({ movies, router }) => {
           </div>
         ) : null}
       </div>
-      {movies?.length > 0 ? (
+      {currentMovies?.length > 0 ? (
         <div className="flex justify-center items-center mt-4">
           <button
             onClick={() => handlePageChange(currentPage - 1)}
