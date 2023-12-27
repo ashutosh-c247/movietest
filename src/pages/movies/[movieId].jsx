@@ -10,9 +10,14 @@ import { useSession } from "next-auth/react";
 const Edit = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const { data } = trpc.movie.getMovieById.useQuery({
-    movieId: router.query.movieId,
-  });
+  const { data } = trpc.movie.getMovieById.useQuery(
+    {
+      movieId: router.query.movieId,
+    },
+    {
+      enabled: !!router.query.movieId,
+    }
+  );
 
   const [previewImage, setPreviewImage] = useState("");
   const [showCross, setShowCross] = useState(true);
