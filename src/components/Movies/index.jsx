@@ -46,7 +46,7 @@ const MoviePage = ({ movies, router }) => {
             <div className="w-full h-96 relative bg-teal-950 rounded-xl backdrop-blur-3xl flex-col justify-start items-start gap-4 inline-flex">
               <Image
                 className="w-full h-64 rounded-t-xl object-cover"
-                src={movie.poster}
+                src={movie.poster?.trim()}
                 alt={movie.title}
                 width={300}
                 height={300}
