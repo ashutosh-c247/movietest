@@ -43,36 +43,37 @@ export default function SignUp() {
   };
 
   return (
-    <form className="signInForm" onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>First Name:</label>
-        <input type="text" {...register("firstName")} />
+    <div className="w-full h-screen flex-col justify-center items-center inline-flex">
+    <form className="w-[300px] relative" onSubmit={handleSubmit(onSubmit)}>
+    <div className="left-[37px] top-0  text-center text-white text-[64px] font-semibold leading-[80px] mb-8">
+            Sign up
+          </div>
+      <div className="w-[300px] h-[45px] left-0 top-[120px] mb-[24px]">
+        <input placeholder="First Name" type="text" {...register("firstName")} className="w-[300px] h-[45px] left-0 top-0  bg-cyan-900 rounded-[10px] pl-[16px] text-white text-sm border-transparent focus:outline-none"/>
         {errors.firstName && (
-          <p className="error">{errors.firstName.message}</p>
+          <p className="text-rose-500 font-semibold text-xs py-1">{errors.firstName.message}</p>
         )}
       </div>
-      <div>
-        <label>Last Name:</label>
-        <input type="text" {...register("lastName")} />
-        {errors.lastName && <p className="error">{errors.lastName.message}</p>}
+      <div className="w-[300px] h-[45px] left-0 top-[120px] mb-[24px]">
+        <input type="text" {...register("lastName")} placeholder="Last Name" className="w-[300px] h-[45px] left-0 top-0  bg-cyan-900 rounded-[10px] pl-[16px] text-white text-sm border-transparent focus:outline-none"/>
+        {errors.lastName && <p className="text-rose-500 font-semibold text-xs py-1">{errors.lastName.message}</p>}
       </div>
-      <div>
-        <label>Email:</label>
-        <input type="email" {...register("email")} />
-        {errors.email && <p className="error">{errors.email.message}</p>}
+      <div className="w-[300px] h-[45px] left-0 top-[120px] mb-[24px]">
+        <input type="email" {...register("email")} placeholder="Email" className="w-[300px] h-[45px] left-0 top-0  bg-cyan-900 rounded-[10px] pl-[16px] text-white text-sm border-transparent focus:outline-none"/>
+        {errors.email && <p className="text-rose-500 font-semibold text-xs py-1">{errors.email.message}</p>}
       </div>
-      <div>
-        <label>Password:</label>
-        <input type="password" {...register("password")} />
-        {errors.password && <p className="error">{errors.password.message}</p>}
+      <div className="w-[300px] h-[45px] left-0 top-[120px] mb-[24px]">
+        <input type="password" placeholder="Password" {...register("password")} className="w-[300px] h-[45px] left-0 top-0  bg-cyan-900 rounded-[10px] pl-[16px] text-white text-sm border-transparent focus:outline-none"/>
+        {errors.password && <p className="text-rose-500 font-semibold text-xs py-1">{errors.password.message}</p>}
       </div>
-      <button className="w-full mt-4" type="submit" disabled={submitting}>
+      <button className="w-[300px] h-[54px] py-[15px] left-0 top-[306px]  bg-[#2BD17E] rounded-[10px] justify-center cursor-pointer items-center gap-[5px] inline-flex text-center text-white text-base font-bold leading-normal hover:bg-emerald-500" type="submit" disabled={submitting}>
         {submitting ? "Signing up..." : "Sign Up"}
       </button>
-      <p>
+      <p className="left-[37px] top-[250px]  text-center text-white text-[12px] font-semibold leading-[80px]">
         Already have an account? <Link href="/">Sign In</Link>
       </p>
     </form>
+    </div>
   );
 }
 
