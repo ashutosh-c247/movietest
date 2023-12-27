@@ -1,10 +1,8 @@
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/server/db/client";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { comparePassword } from "@/utils/auth";
-
-const prisma = new PrismaClient();
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
@@ -12,8 +10,8 @@ export const authOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
+        username: { label: "Username", type: "text", required: true },
+        password: { label: "Password", type: "password", required: true },
       },
       authorize: async (credentials) => {
         const user = await prisma.user.findUnique({
