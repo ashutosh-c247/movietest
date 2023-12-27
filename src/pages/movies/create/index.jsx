@@ -40,7 +40,7 @@ const createMovie = () => {
 
         setValue("poster", secureUrl);
 
-        setPreviewImage(secureUrl);
+        setPreviewImage(secureUrl.trim());
       } catch (error) {
         console.error("Error uploading image:", error);
       }
@@ -69,7 +69,7 @@ const createMovie = () => {
           >
             {previewImage ? (
               <Image
-                src={previewImage}
+                src={previewImage.trim()}
                 alt="Dropped image"
                 width={800}
                 height={600}

@@ -28,7 +28,7 @@ const Edit = () => {
 
   useEffect(() => {
     if (data) {
-      setPreviewImage(data.poster);
+      setPreviewImage(data.poster?.trim());
       setValue("title", data.title);
       setValue("publishingYear", data.publishingYear);
     }
@@ -100,7 +100,7 @@ const Edit = () => {
                     X
                   </div>
                   <Image
-                    src={previewImage}
+                    src={previewImage?.trim()}
                     alt="Preview Image"
                     width={800}
                     height={600}
