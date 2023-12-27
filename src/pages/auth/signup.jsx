@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
+import { trpc } from "@/utils/trpc";
 
 export default function SignUp() {
   const {
@@ -14,22 +15,19 @@ export default function SignUp() {
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
 
+  const createUser = trpc.auth.registerUser.useMutation({
+    onSuccess: () => {
+      toast.success("User created successfully");
+      router.push("/");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
   const onSubmit = async (data) => {
     setSubmitting(true);
-
-    const response = await fetch("/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-
-    if (response.ok) {
-      router.push("/");
-    } else {
-      const errorData = await response.json();
-      toast.error(errorData.error);
-      console.error("Signup error:", errorData);
-    }
+    await createUser.mutateAsync(data);
 
     setSubmitting(false);
   };

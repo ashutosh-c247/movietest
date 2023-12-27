@@ -1,15 +1,19 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { uploadImage } from "@/utils/cloudinaryHelper";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
+import { trpc } from "@/utils/trpc";
 
-const Edit = ({ movie }) => {
-  const [previewImage, setPreviewImage] = useState(movie.poster);
-  const [showCross, setShowCross] = useState(true);
-  const BASE_URL = "/api/movies";
+const Edit = () => {
   const router = useRouter();
+  const { data } = trpc.movie.getMovieById.useQuery({
+    movieId: router.query.movieId,
+  });
+
+  const [previewImage, setPreviewImage] = useState("");
+  const [showCross, setShowCross] = useState(true);
   const {
     handleSubmit,
     setValue,
@@ -17,47 +21,42 @@ const Edit = ({ movie }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      movieId: movie.id,
-      title: movie.title,
-      publishingYear: movie.publishingYear,
-      poster: movie.poster,
+      title: data?.title,
+      publishingYear: data?.publishingYear,
     },
   });
 
+  useEffect(() => {
+    if (data) {
+      setPreviewImage(data.poster);
+      setValue("title", data.title);
+      setValue("publishingYear", data.publishingYear);
+    }
+  }, [data]);
+
   const fileInputRef = useRef(null);
 
-  const onSubmit = async (data) => {
-    const res = await updateMovie(data);
-    if (res) {
+  const updateMovie = trpc.movie.updateMovie.useMutation({
+    onSuccess: () => {
       toast.success("Movie updated successfully");
-    }
-  };
+      router.push("/movies");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
-  const updateMovie = async (data) => {
-    try {
-      const response = await fetch(BASE_URL, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        toast.error(errorData.message || "Failed to edit movie.");
-      }
-
-      return response.json();
-    } catch (error) {
-      console.error("Error creating movie:", error.message);
-      throw error;
-    }
+  const onSubmit = async (data) => {
+    await updateMovie.mutateAsync({
+      movieId: router.query.movieId,
+      poster: previewImage,
+      ...data,
+    });
   };
 
   const handleRemoveImage = () => {
     setPreviewImage(null);
-    setShowCross(false); // Hide the cross icon after removing the image
+    setShowCross(false);
   };
 
   const handleImageDrop = (event) => {
@@ -192,20 +191,4 @@ const Edit = ({ movie }) => {
   );
 };
 
-export async function getServerSideProps({ params }) {
-  const response = await fetch(`http://localhost:3000/api/movies/`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      movieId: params.movieId,
-    }),
-  });
-  const movie = await response.json();
-
-  return {
-    props: { movie },
-  };
-}
 export default Edit;

@@ -34,7 +34,6 @@ const SignIn = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log("🚀 ~ file: index.jsx:32 ~ onSubmit ~ data:", data);
     setSubmitting(true);
     const { email, password } = data;
 

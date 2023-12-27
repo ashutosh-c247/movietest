@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { uploadImage } from "@/utils/cloudinaryHelper";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
+import { trpc } from "@/utils/trpc";
 
 const createMovie = () => {
   const {
@@ -13,41 +14,21 @@ const createMovie = () => {
     formState: { errors },
   } = useForm();
   const [previewImage, setPreviewImage] = useState(null);
-  const BASE_URL = "/api/movies";
   const fileInputRef = useRef(null);
   const router = useRouter();
 
-  const createMovie = async (data) => {
-    try {
-      const response = await fetch(BASE_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        toast.error(errorData.message || "Failed to create movie.");
-      }
-      setPreviewImage(null);
-      setValue("title", "");
-      setValue("year", "");
-      setValue("poster", "");
-
-      return response.json();
-    } catch (error) {
-      console.error("Error creating movie:", error.message);
-      throw error;
-    }
-  };
+  const createMovie = trpc.movie.createMovie.useMutation({
+    onSuccess: () => {
+      toast.success("Movie created successfully");
+      router.push("/movies");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
   const onSubmit = async (data) => {
-    const res = await createMovie(data);
-    if (res) {
-      toast.success("Movie created successfully");
-    }
+    await createMovie.mutateAsync(data);
   };
 
   const onFileChange = async (event) => {
