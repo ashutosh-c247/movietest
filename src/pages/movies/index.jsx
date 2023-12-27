@@ -8,7 +8,9 @@ const MoviesPage = () => {
   const router = useRouter();
   const { data: session } = useSession();
 
-  const { data: movies } = trpc.movie.listMovies.useQuery();
+  const { data: movies } = trpc.movie.listMovies.useQuery({
+    userEmail: session?.user?.email,
+  });
 
   useEffect(() => {
     if (!session) {

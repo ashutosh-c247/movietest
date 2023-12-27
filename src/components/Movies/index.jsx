@@ -17,7 +17,7 @@ const MoviePage = ({ movies, router }) => {
   const handleSignOut = async () => {
     await signOut({ callbackUrl: "/" });
   };
-
+  console.log(movies.length);
   return (
     <div className="min-h-screen p-8 flex flex-col space-y-8 lg:py-[80px] xl:py-[120px] md:px-[30px] xl:px-[120px]">
       <div class="w-full">
@@ -72,26 +72,45 @@ const MoviePage = ({ movies, router }) => {
             </div>
           ))}
         </div>
+
+        {!movies?.length ? (
+          <div className="flex justify-center flex-col items-center pt-10">
+            <h2 className="text-white text-xl sm:text-4xl md:text-5xl font-semibold font-montserrat leading-10 pb-5">
+              Your movie list is empty
+            </h2>
+            <button
+              type="submit"
+              className={`w-48 color-white button button-instance cursor-pointer bg-[#2BD17E] hover:bg-emerald-500`}
+              onClick={() => router.push("/movies/create")}
+            >
+              <div className={`submit design-component-instance-node`}>
+                Add a new movie
+              </div>
+            </button>
+          </div>
+        ) : null}
       </div>
-      <div className="flex justify-center items-center mt-4">
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          className="mr-2 px-4 py-2 border rounded-md text-white hover:bg-[#2BD17E]"
-        >
-          Previous
-        </button>
-        <span className="mx-2 text-white">
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className="ml-2 px-4 py-2 border rounded-md text-white hover:bg-[#2BD17E]"
-        >
-          Next
-        </button>
-      </div>
+      {movies?.length > 0 ? (
+        <div className="flex justify-center items-center mt-4">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="mr-2 px-4 py-2 border rounded-md text-white hover:bg-[#2BD17E]"
+          >
+            Previous
+          </button>
+          <span className="mx-2 text-white">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="ml-2 px-4 py-2 border rounded-md text-white hover:bg-[#2BD17E]"
+          >
+            Next
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 };

@@ -10,8 +10,8 @@ export const authOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text", required: true },
-        password: { label: "Password", type: "password", required: true },
+        email: { label: "email", type: "text" },
+        password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
         const user = await prisma.user.findUnique({
