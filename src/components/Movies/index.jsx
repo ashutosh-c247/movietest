@@ -44,10 +44,12 @@ const MoviePage = ({ movies, router }) => {
             onClick={() => router.push(`/movies/${movie.id}`)}
           >
             <div className="w-full h-96 relative bg-teal-950 rounded-xl backdrop-blur-3xl flex-col justify-start items-start gap-4 inline-flex">
-              <img
+              <Image
                 className="w-full h-64 rounded-t-xl object-cover"
                 src={movie.poster}
                 alt={movie.title}
+                width={300}
+                height={300}
               />
               <div className="p-4">
                 <div className="text-white text-xl font-medium font-montserrat leading-loose">
