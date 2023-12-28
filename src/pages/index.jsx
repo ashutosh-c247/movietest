@@ -45,7 +45,9 @@ const SignIn = () => {
       });
 
       if (response?.error) {
-        toast.error(response.error);
+        toast.error(response.error, {
+          position: "bottom-center",
+        });
       } else {
         router.push("/movies");
       }
@@ -90,13 +92,12 @@ const SignIn = () => {
           )}
         </div>
         <div className="flex items-center justify-center mb-[24px]">
-          
-            <input
-              type="checkbox"
-              {...register("rememberMe")}
-              className="remember-me-check"
-              id="remember-me"
-            />
+          <input
+            type="checkbox"
+            {...register("rememberMe")}
+            className="remember-me-check"
+            id="remember-me"
+          />
           <label className="custom-checkbox" htmlFor="remember-me"></label>
           <p className="left-[45px] top-0  text-white text-sm">Remember me</p>
         </div>

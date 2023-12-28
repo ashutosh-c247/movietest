@@ -50,17 +50,23 @@ const Edit = () => {
 
   const updateMovie = trpc.movie.updateMovie.useMutation({
     onSuccess: () => {
-      toast.success("Movie updated successfully");
+      toast.success("Movie updated successfully", {
+        position: "bottom-center",
+      });
       router.push("/movies");
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(error.message, {
+        position: "bottom-center",
+      });
     },
   });
 
   const onSubmit = async (data) => {
     if (!previewImage) {
-      toast.error("Please upload an image");
+      toast.error("Please upload an image", {
+        position: "bottom-center",
+      });
       return;
     }
     await updateMovie.mutateAsync({
@@ -78,7 +84,7 @@ const Edit = () => {
   const handleImageDrop = (event) => {
     fileInputRef?.current?.click();
   };
-  
+
   const onFileChange = async (event) => {
     const file = event?.target?.files?.[0];
 
@@ -97,14 +103,24 @@ const Edit = () => {
   return (
     <div className="min-h-screen edit p-8 md:px-[30px] xl:px-[120px] lg:py-[80px] xl:py-[120px]">
       <div className="mx-0 w-full">
-      <div className="text-wrapper-5 mb-[40px] lg:mb-[80px] xl:mb-[100px]">Edit</div>
-      <form className="div flex flex-col	md:flex-row" onSubmit={handleSubmit(onSubmit)}>
-        <div className="group w-full md:w-[473px] h-[504px] mb-[24px] md:mb-0" onClick={handleImageDrop}>
-          
+        <div className="text-wrapper-5 mb-[40px] lg:mb-[80px] xl:mb-[100px]">
+          Edit
+        </div>
+        <form
+          className="div flex flex-col	md:flex-row"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div
+            className="group w-full md:w-[473px] h-[504px] mb-[24px] md:mb-0"
+            onClick={handleImageDrop}
+          >
             {previewImage ? (
               showCross && (
                 <>
-                  <div className="cross-icon absolute top-[20px] right-[20px] z-30 cursor-pointer text-xl font-black" onClick={handleRemoveImage}>
+                  <div
+                    className="cross-icon absolute top-[20px] right-[20px] z-30 cursor-pointer text-xl font-black"
+                    onClick={handleRemoveImage}
+                  >
                     X
                   </div>
                   <Image
@@ -118,10 +134,8 @@ const Edit = () => {
               )
             ) : (
               <>
-                <div
-                  className="group-2"
-                >
-                {/* <img
+                <div className="group-2">
+                  {/* <img
                   className="vectors"
                   alt="Vectors"
                   src="https://c.animaapp.com/T8Jpu6Ic/img/vectors.png"
@@ -141,69 +155,69 @@ const Edit = () => {
                       src="https://c.animaapp.com/T8Jpu6Ic/img/file-download-black-24dp-1.svg"
                     />
                   </label>
-                <div className="text-wrapper-2">Drop other image here</div>
+                  <div className="text-wrapper-2">Drop other image here</div>
                 </div>
               </>
             )}
-        </div>
-        <div className="form ml-0 w-full md:ml-[24px] md:w-[362px] lg:ml-[120px]">
-        
-        <div className="overlap-wrapper mb-[24px]">
-          <input
-            type="text"
-            placeholder="Title"
-            {...register("title", { required: "Title is required" })}
-            className="w-full h-[45px] bg-cyan-900 rounded-[10px] pl-[16px] text-white text-sm border-transparent focus:outline-none"
-          />
-          {errors.title && (
-            <p
-              className="text-rose-600 text-sm left-[16px] top-[48px]"
-              style={{ position: "absolute" }}
-            >
-              {errors.title.message}
-            </p>
-          )}
-        </div>
-        <div className="input mb-[24px]">
-          <div className="overlap-group">
-            <div className="w-[300px] h-[45px] left-0 top-[189px] bg-transparent">
+          </div>
+          <div className="form ml-0 w-full md:ml-[24px] md:w-[362px] lg:ml-[120px]">
+            <div className="overlap-wrapper mb-[24px]">
               <input
                 type="text"
-                className="w-full h-[45px] left-0 top-0 absolute bg-cyan-900 rounded-[10px] pl-[16px] text-white text-sm border-transparent focus:outline-none"
-                placeholder="Publishing year"
-                {...register("publishingYear", {
-                  required: "Publishing year is required",
-                })}
+                placeholder="Title"
+                {...register("title", { required: "Title is required" })}
+                className="w-full h-[45px] bg-cyan-900 rounded-[10px] pl-[16px] text-white text-sm border-transparent focus:outline-none"
               />
-              {errors.publishingYear && (
+              {errors.title && (
                 <p
-                  className="text-rose-500 text-sm left-[16px] top-[48px]"
+                  className="text-rose-600 text-sm left-[16px] top-[48px]"
                   style={{ position: "absolute" }}
                 >
-                  {errors.publishingYear.message}
+                  {errors.title.message}
                 </p>
               )}
             </div>
+            <div className="input mb-[24px]">
+              <div className="overlap-group">
+                <div className="w-[300px] h-[45px] left-0 top-[189px] bg-transparent">
+                  <input
+                    type="text"
+                    className="w-full h-[45px] left-0 top-0 absolute bg-cyan-900 rounded-[10px] pl-[16px] text-white text-sm border-transparent focus:outline-none"
+                    placeholder="Publishing year"
+                    {...register("publishingYear", {
+                      required: "Publishing year is required",
+                    })}
+                  />
+                  {errors.publishingYear && (
+                    <p
+                      className="text-rose-500 text-sm left-[16px] top-[48px]"
+                      style={{ position: "absolute" }}
+                    >
+                      {errors.publishingYear.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-5">
+              <button
+                type="button"
+                className={`w-full button-wrapper button-2 cursor-pointer hover:bg-emerald-500`}
+                onClick={() => router.push("/movies")}
+              >
+                <div className="text-wrapper">Cancel</div>
+              </button>
+              <button
+                type="submit"
+                className={`w-full button button-instance cursor-pointer bg-[#2BD17E] hover:bg-emerald-500`}
+              >
+                <div className={`submit design-component-instance-node`}>
+                  Update
+                </div>
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="grid grid-cols-2 gap-5">
-        <button
-          type="button"
-          className={`w-full button-wrapper button-2 cursor-pointer hover:bg-emerald-500`}
-          onClick={() => router.push("/movies")}
-        >
-          <div className="text-wrapper">Cancel</div>
-        </button>
-        <button
-          type="submit"
-          className={`w-full button button-instance cursor-pointer bg-[#2BD17E] hover:bg-emerald-500`}
-        >
-          <div className={`submit design-component-instance-node`}>Update</div>
-        </button>
-        </div>
-        
-        </div>
-      </form>
+        </form>
       </div>
     </div>
   );

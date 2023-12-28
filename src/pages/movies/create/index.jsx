@@ -27,7 +27,9 @@ const createMovie = () => {
 
   const createMovie = trpc.movie.createMovie.useMutation({
     onSuccess: () => {
-      toast.success("Movie created successfully");
+      toast.success("Movie created successfully", {
+        position: "bottom-center",
+      });
       router.push("/movies");
     },
     onError: (error) => {
@@ -37,7 +39,9 @@ const createMovie = () => {
 
   const onSubmit = async (data) => {
     if (!previewImage) {
-      toast.error("Please upload an image");
+      toast.error("Please upload an image", {
+        position: "bottom-center",
+      });
       return;
     }
     const mutatedData = {
@@ -137,19 +141,19 @@ const createMovie = () => {
                     
                   </div> */}
                   <input
-                      type="text"
-                      className="w-full h-[45px] left-0 top-0 absolute bg-cyan-900 rounded-[10px] pl-[16px] text-white text-sm border-transparent focus:outline-none"
-                      placeholder="Publishing year"
-                      {...register("publishingYear", {
-                        required: "Publishing year is required",
-                      })}
-                    />
+                    type="text"
+                    className="w-full h-[45px] left-0 top-0 absolute bg-cyan-900 rounded-[10px] pl-[16px] text-white text-sm border-transparent focus:outline-none"
+                    placeholder="Publishing year"
+                    {...register("publishingYear", {
+                      required: "Publishing year is required",
+                    })}
+                  />
                 </div>
                 {errors.publishingYear && (
-                      <p className="font-semibold text-rose-500 text-xs">
-                        {errors.publishingYear.message}
-                      </p>
-                    )}
+                  <p className="font-semibold text-rose-500 text-xs">
+                    {errors.publishingYear.message}
+                  </p>
+                )}
               </div>
             </div>
             <div className="grid grid-cols-2 gap-5">
