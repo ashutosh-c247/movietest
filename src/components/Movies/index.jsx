@@ -11,6 +11,39 @@ const MoviePage = ({ movies, router }) => {
 
   const totalPages = Math.ceil(movies?.length / moviesPerPage);
 
+  const renderPaginationBlocks = () => {
+    const blocks = [];
+    const maxVisiblePages = 8;
+
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) {
+        blocks.push(i);
+      }
+    } else {
+      const halfMaxVisiblePages = Math.floor(maxVisiblePages / 2);
+
+      if (currentPage <= halfMaxVisiblePages) {
+        for (let i = 1; i <= maxVisiblePages; i++) {
+          blocks.push(i);
+        }
+      } else if (currentPage > totalPages - halfMaxVisiblePages) {
+        for (let i = totalPages - maxVisiblePages + 1; i <= totalPages; i++) {
+          blocks.push(i);
+        }
+      } else {
+        for (
+          let i = currentPage - halfMaxVisiblePages;
+          i <= currentPage + halfMaxVisiblePages;
+          i++
+        ) {
+          blocks.push(i);
+        }
+      }
+    }
+
+    return blocks;
+  };
+
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
@@ -96,11 +129,19 @@ const MoviePage = ({ movies, router }) => {
             disabled={currentPage === 1}
             className="mr-2 px-4 py-2 border rounded-md text-white hover:bg-[#2BD17E]"
           >
-            Previous
+            Prev
           </button>
-          <span className="mx-2 text-white">
-            Page {currentPage} of {totalPages}
-          </span>
+          {renderPaginationBlocks().map((page) => (
+            <button
+              key={page}
+              onClick={() => handlePageChange(page)}
+              className={`mx-2 px-4 py-2 border rounded-md text-white ${
+                currentPage === page ? "bg-[#2BD17E]" : "hover:bg-[#2BD17E]"
+              }`}
+            >
+              {page}
+            </button>
+          ))}
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
