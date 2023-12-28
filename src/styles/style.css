@@ -30,7 +30,6 @@ input {
 }
 
 button {
-  background-color: #4caf50;
   color: white;
   padding: 10px;
   border: none;
@@ -224,18 +223,18 @@ button:hover {
   line-height: var(--h2-line-height);
 }
 
-.movie-box{
-  background-color: #092C39;
+.movie-box {
+  background-color: #092c39;
 }
 
-.remember-me-check{
+.remember-me-check {
   width: 20px;
   height: 20px;
   position: absolute;
   left: 0px;
   opacity: 0;
 }
-.custom-checkbox{
+.custom-checkbox {
   display: flex;
   width: 18px;
   height: 18px;
@@ -247,7 +246,7 @@ button:hover {
   border-radius: 5px;
   margin-right: 5px;
 }
-.remember-me-check:checked + .custom-checkbox:after{
+.remember-me-check:checked + .custom-checkbox:after {
   content: "";
   display: block;
   width: 12px;
